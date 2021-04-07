@@ -1,18 +1,9 @@
 import 'reflect-metadata';
-import { User } from './entity/User';
 import { Quiz } from './entity/Quiz';
 import { Answer } from './entity/Answer';
-import { Upload } from './entity/Upload';
-import { Course } from './entity/Course';
 import { Question } from './entity/Question';
-import { Promotion } from './entity/Promotion';
 import { Tag } from './entity/Tag';
-import { Evaluation } from './entity/Evaluation';
-import { ContactInformation } from './entity/ContactInformation';
-import { CourseResolver } from './resolvers/Course';
-import { UserResolver } from './resolvers/User';
 import { QuizResolver } from './resolvers/Quiz';
-import { passwordAuthChecker } from './utils/auth-checker';
 import { createConnection } from 'typeorm';
 import { buildSchema } from 'type-graphql';
 import { ApolloServer } from 'apollo-server-express';
@@ -35,12 +26,6 @@ const startServer = async () => {
     password: process.env.DB_PASS,
     database: 'ELI',
     entities: [
-      User,
-      Course,
-      Promotion,
-      Upload,
-      Evaluation,
-      ContactInformation,
       Quiz,
       Question,
       Answer,
@@ -55,14 +40,11 @@ const startServer = async () => {
 
   const schema = await buildSchema({
     resolvers: [
-      UserResolver,
-      CourseResolver,
       QuizResolver,
       QuestionResolver,
       AnswerResolver,
       TagResolver,
     ],
-    authChecker: passwordAuthChecker,
     nullableByDefault: true,
   });
 
